@@ -1,0 +1,6 @@
+{
+  "name": "Super Admin Elite",
+  "description": "Master Central for license and user management, connected to a Hostinger MySQL database.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
