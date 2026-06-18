@@ -48,7 +48,7 @@ export default function SuperAdmin() {
       setError(null);
       const res = await fetch('/api/admin/tenants');
       const data = await res.json();
-      
+
       if (Array.isArray(data)) {
         const parsed = data.map(t => ({
           ...t,
@@ -63,7 +63,7 @@ export default function SuperAdmin() {
         setTenants([]);
       }
       setLoading(false);
-    } catch (e) { 
+    } catch (e) {
       console.error(e);
       setError('Erro crítico ao carregar inquilinos.');
       setLoading(false);
@@ -75,7 +75,7 @@ export default function SuperAdmin() {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editing) return;
-    
+
     await fetch(`/api/admin/tenants/${editing.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -92,7 +92,7 @@ export default function SuperAdmin() {
     setEditing({ ...editing, trial_ends_at: date.toISOString(), subscription_status: 'trialing', active: true });
   };
 
-  const filteredTenants = tenants.filter(t => 
+  const filteredTenants = tenants.filter(t =>
     (t.name?.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (t.email?.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (t.id?.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -111,16 +111,16 @@ export default function SuperAdmin() {
         <div>
           <h1 className="text-5xl font-black uppercase tracking-tighter text-blue-500 flex items-center gap-3">
             <Shield className="w-12 h-12" />
-            Master Central
+            marcos eduardo
           </h1>
           <p className="text-gray-500 font-bold uppercase tracking-widest text-[10px] mt-2">
             Gestão de Licenças e Usuários Elite
           </p>
         </div>
-        
+
         <div className="flex-1 max-w-md relative group">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-500 transition-colors" size={20} />
-          <input 
+          <input
             type="text"
             placeholder="PESQUISAR NOME, EMAIL OU ID..."
             className="w-full bg-[#141417] border border-white/5 p-5 pl-14 rounded-[24px] outline-none focus:border-blue-500/50 font-black text-[10px] uppercase tracking-widest transition-all placeholder:text-gray-600"
@@ -143,7 +143,7 @@ export default function SuperAdmin() {
               <ShieldAlert size={16} /> Falha de Conexão
             </h3>
             <p className="text-gray-400 text-sm font-medium whitespace-pre-wrap">{error}</p>
-            <button 
+            <button
               onClick={fetchTenants}
               className="mt-2 w-fit bg-red-500/20 hover:bg-red-500/30 text-red-500 px-4 py-2 rounded-xl text-[10px] font-black uppercase transition-all"
             >
@@ -183,23 +183,23 @@ export default function SuperAdmin() {
                         </div>
                         <div className="flex flex-col gap-1 mt-2">
                           <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest flex items-center gap-2">
-                             <Shield size={10} className="text-blue-500"/> ID: <span className="text-gray-400 font-mono lowercase">{t.id}</span>
+                            <Shield size={10} className="text-blue-500" /> ID: <span className="text-gray-400 font-mono lowercase">{t.id}</span>
                           </div>
                           {t.email && (
                             <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest flex items-center gap-2">
-                               <Shield size={10} className="text-green-500"/> Email: <span className="text-gray-400 lowercase">{t.email}</span>
+                              <Shield size={10} className="text-green-500" /> Email: <span className="text-gray-400 lowercase">{t.email}</span>
                             </div>
                           )}
                           {t.admin_name && (
                             <div className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">
-                               Admin: {t.admin_name}
+                              Admin: {t.admin_name}
                             </div>
                           )}
                         </div>
                       </td>
                       <td className="p-8">
                         <span className={`px-4 py-2 rounded-full text-[10px] font-black uppercase flex items-center gap-2 w-fit ${t.active ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}>
-                          {t.active ? <ShieldCheck size={14}/> : <ShieldAlert size={14}/>}
+                          {t.active ? <ShieldCheck size={14} /> : <ShieldAlert size={14} />}
                           {t.active ? 'Ativo' : 'Suspenso'}
                         </span>
                       </td>
@@ -210,11 +210,11 @@ export default function SuperAdmin() {
                         <div className="text-[9px] uppercase font-bold text-gray-600 mt-1">Status: {t.subscription_status || 'N/A'}</div>
                       </td>
                       <td className="p-8 text-right">
-                        <button 
-                          onClick={() => setEditing(t)} 
+                        <button
+                          onClick={() => setEditing(t)}
                           className="p-4 bg-blue-600 hover:bg-blue-500 rounded-2xl transition-all shadow-xl shadow-blue-500/20 active:scale-95"
                         >
-                          <Pencil size={20}/>
+                          <Pencil size={20} />
                         </button>
                       </td>
                     </tr>
@@ -235,21 +235,21 @@ export default function SuperAdmin() {
       <AnimatePresence>
         {editing && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-start justify-center p-4 overflow-y-auto">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               className="bg-[#1c1c21] w-full max-w-lg rounded-[30px] p-6 md:p-8 border border-white/10 relative my-4 shadow-2xl"
             >
               <button onClick={() => setEditing(null)} className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors">
-                <X size={24}/>
+                <X size={24} />
               </button>
-              
+
               <div className="mb-6">
                 <h2 className="text-2xl font-black uppercase text-blue-500">Editar Conta</h2>
                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-0.5">Ajuste de privilégios e tempo</p>
               </div>
-              
+
               <form onSubmit={handleUpdate} className="space-y-6">
                 <div className="space-y-4 p-4 bg-black/30 rounded-2xl border border-white/5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -259,22 +259,22 @@ export default function SuperAdmin() {
                     </div>
                     <div>
                       <label className="text-[9px] uppercase font-black text-blue-500 mb-1 block tracking-widest">Senha Principal</label>
-                      <input 
+                      <input
                         type="text"
-                        className="w-full bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs text-blue-200 placeholder:text-blue-900" 
-                        value={editing.password || ''} 
+                        className="w-full bg-blue-500/10 border border-blue-500/30 p-3 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs text-blue-200 placeholder:text-blue-900"
+                        value={editing.password || ''}
                         placeholder="DEFINIR SENHA"
-                        onChange={e => setEditing({...editing, password: e.target.value})} 
+                        onChange={e => setEditing({ ...editing, password: e.target.value })}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="text-[9px] uppercase font-black text-gray-600 mb-1 block tracking-widest">Email do Usuário</label>
-                    <input 
-                      className="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-sm" 
-                      value={editing.email || ''} 
+                    <input
+                      className="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-sm"
+                      value={editing.email || ''}
                       placeholder="email@usuario.com"
-                      onChange={e => setEditing({...editing, email: e.target.value})} 
+                      onChange={e => setEditing({ ...editing, email: e.target.value })}
                     />
                   </div>
                 </div>
@@ -282,29 +282,29 @@ export default function SuperAdmin() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-[9px] uppercase font-black text-gray-500 mb-2 block tracking-widest">Nome Empresa</label>
-                    <input 
-                      className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs" 
-                      value={editing.name || ''} 
-                      onChange={e => setEditing({...editing, name: e.target.value})} 
+                    <input
+                      className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs"
+                      value={editing.name || ''}
+                      onChange={e => setEditing({ ...editing, name: e.target.value })}
                     />
                   </div>
                   <div>
                     <label className="text-[9px] uppercase font-black text-gray-500 mb-2 block tracking-widest">Administrador</label>
-                    <input 
-                      className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs" 
-                      value={editing.admin_name || ''} 
+                    <input
+                      className="w-full bg-black/40 border border-white/10 p-4 rounded-xl outline-none focus:border-blue-500 font-bold transition-all text-xs"
+                      value={editing.admin_name || ''}
                       placeholder="Admin"
-                      onChange={e => setEditing({...editing, admin_name: e.target.value})} 
+                      onChange={e => setEditing({ ...editing, admin_name: e.target.value })}
                     />
                   </div>
                 </div>
 
                 <div>
                   <label className="text-[10px] uppercase font-black text-gray-500 mb-3 block">WhatsApp</label>
-                  <input 
-                    className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold transition-all" 
-                    value={editing.whatsapp || ''} 
-                    onChange={e => setEditing({...editing, whatsapp: e.target.value})} 
+                  <input
+                    className="w-full bg-black/40 border border-white/10 p-5 rounded-2xl outline-none focus:border-blue-500 font-bold transition-all"
+                    value={editing.whatsapp || ''}
+                    onChange={e => setEditing({ ...editing, whatsapp: e.target.value })}
                   />
                 </div>
 
@@ -318,11 +318,10 @@ export default function SuperAdmin() {
                           key={tab.id}
                           type="button"
                           onClick={() => togglePermission(tab.id)}
-                          className={`p-2 rounded-xl text-[8px] font-black uppercase tracking-tighter transition-all border flex items-center justify-between gap-2 ${
-                            isActive 
-                              ? 'bg-blue-600/10 text-blue-400 border-blue-500/30' 
+                          className={`p-2 rounded-xl text-[8px] font-black uppercase tracking-tighter transition-all border flex items-center justify-between gap-2 ${isActive
+                              ? 'bg-blue-600/10 text-blue-400 border-blue-500/30'
                               : 'bg-black/20 text-gray-600 border-white/5'
-                          }`}
+                            }`}
                         >
                           <span className="truncate">{tab.label}</span>
                           {isActive ? <ShieldCheck size={10} className="shrink-0" /> : <X size={10} className="shrink-0" />}
@@ -336,10 +335,10 @@ export default function SuperAdmin() {
                   <label className="text-[9px] uppercase font-black text-gray-400 mb-4 block text-center tracking-widest">Adicionar Validade (Dias)</label>
                   <div className="grid grid-cols-4 md:grid-cols-7 gap-2 mb-4">
                     {[1, 2, 3, 4, 5, 6, 7].map(d => (
-                      <button 
-                        key={d} 
-                        type="button" 
-                        onClick={() => addDays(d)} 
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => addDays(d)}
                         className="bg-blue-600/10 hover:bg-blue-600 p-2 rounded-lg text-[8px] font-black transition-all border border-blue-500/20 text-blue-400 hover:text-white"
                       >
                         +{d}D
@@ -348,10 +347,10 @@ export default function SuperAdmin() {
                   </div>
                   <div className="grid grid-cols-4 gap-2">
                     {[15, 30, 90, 365].map(d => (
-                      <button 
-                        key={d} 
-                        type="button" 
-                        onClick={() => addDays(d)} 
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => addDays(d)}
                         className="bg-white/5 hover:bg-blue-600 p-2 rounded-lg text-[8px] font-black transition-all border border-white/5 hover:border-blue-400"
                       >
                         +{d}D
@@ -367,20 +366,20 @@ export default function SuperAdmin() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <button 
-                    type="button" 
-                    onClick={() => setEditing({...editing, active: !editing.active})} 
+                  <button
+                    type="button"
+                    onClick={() => setEditing({ ...editing, active: !editing.active })}
                     className={`p-4 rounded-2xl font-black uppercase text-[10px] tracking-widest transition-all flex items-center justify-center gap-2 ${editing.active ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-red-500/10 text-red-500 border border-red-500/20'}`}
                   >
-                    {editing.active ? <ShieldCheck size={14}/> : <ShieldAlert size={14}/>}
+                    {editing.active ? <ShieldCheck size={14} /> : <ShieldAlert size={14} />}
                     {editing.active ? 'Ativo' : 'Suspenso'}
                   </button>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="bg-blue-600 p-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-500 transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2"
                   >
-                    <Save size={16}/> Salvar no Sistema
+                    <Save size={16} /> Salvar no Sistema
                   </button>
                 </div>
               </form>
